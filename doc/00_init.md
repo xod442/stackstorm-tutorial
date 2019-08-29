@@ -1,36 +1,32 @@
 # Initialization
 
-In this part of the tutorial we're going to login to our StackStorm box, 
+In this part of the tutorial we're going to login to our StackStorm box,
 authenticate with StackStorm and finally install this tutorial pack.
 
 ## Provisioning
 
 If you're doing this at home, you'll need to provision a StackStorm node.
-This can be done in a number of different ways detailed in the [StackStorm install docs](https://docs.stackstorm.com/install/index.html).
-You can also use [terraform-st2](https://github.com/EncoreTechnologies/terraform-st2)
-that was used for the PyOhio 2018 tutorial.
+This can be done by getting acces to a clean installation of Ubuntu Mate: (https://ubuntu-mate.org/blog/ubuntu-mate-xenial-final-release/)
+Open a terminal window and enter the following command to install a stackstorm server.
 
+In the terminal elevate privileges by using `sudo su -`
+At the prompt update Ubuntu with `apt-get update`
+
+Make sure `curl` is up to date with `apt-get install curl`
+Now install stackstorm with ` curl -sSL https://stackstorm.com/packages/install.sh | bash -s -- --user=st2admin --password='Ch@ngeMe'`
+
+Please change the password to something you will remember.
 ## Login
 
-SSH into your StackStorm host:
+You should now be able to log into stackstorm:
+`st2 login -w st2admin` then enter the password you used in the install above.
 
-```shell
-# the hostname should be on the card at your station
-ssh stackstorm@1.2.x.x
-```
+Verify you have logged into stackstorm by issuing `st2 action list`
 
-## Authenticate
+You should see a list of available stackstorm actions.
 
-In order to perform actions on the command line and/or API, you need a valid
-authentication token. Authenticating on the CLI can be performed like so:
 
-```shell
-# use the password on the card at your station
-st2 login -w st2admin
-```
-
-**NOTE** This will write your password to a local file `~/.st2/config`. This is
-         **NOT** recommended for production.
+**NOTE** This is  **NOT** recommended for production.
 
 ## Install the tutorial pack
 
@@ -46,3 +42,10 @@ Our code should now be present in: `/opt/stackstorm/packs/tutorial/`
 ```shell
 ls -l /opt/stackstorm/packs/tutorial/
 ```
+
+You can copy the answers from the answer folder up the the corresponding folder if needed.
+
+The answers are located in:`/opt/stackstorm/packs/tutorial/etc/answers`
+
+packs are also available on the stackstorm exchange and can be installed with :
+`st2 pack install servicenow`

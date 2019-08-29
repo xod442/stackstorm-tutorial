@@ -1,7 +1,7 @@
-# Convert exiting Pythong script into a StackStorm action
+# Convert exiting Python script into a StackStorm action
 
 For our first action we're going to convert an existing python script into a
-StackStorm action. Our existing python script lives in [etc/nasa_apod.py](etc/nasa_apod.py). 
+StackStorm action. Our existing python script lives in [etc/nasa_apod.py](etc/nasa_apod.py).
 This script queries NASA's Astronomy Picture Of the Day API and retrieves a link to the latest
 picture.
 
@@ -9,7 +9,7 @@ picture.
 
 Let's ensure this script works by running it:
 
-```shell 
+```shell
 /opt/stackstorm/packs/tutorial/etc/nasa_apod.py --help
 /opt/stackstorm/packs/tutorial/etc/nasa_apod.py --date "2018-07-04"
 ```
@@ -31,8 +31,8 @@ cp /opt/stackstorm/packs/tutorial/etc/nasa_apod.py /opt/stackstorm/packs/tutoria
 ```
 
 Now we need to create an Action Metadata file that tells StackStorm how to execute
-our script. Action metadat files are written in YAML. They provide information to 
-StackStorm such as script location, and input parameters. 
+our script. Action metadat files are written in YAML. They provide information to
+StackStorm such as script location, and input parameters.
 
 Create an action metadata file `/opt/stackstorm/packs/tutorial/actions/nasa_apod.yaml`
 with the following content:
@@ -55,7 +55,7 @@ parameters:
 ```
 
 -----------
-**NOTE** 
+**NOTE**
 If you're struggling and just need the answer, simply copy the file from our
 answers directory:
 ```shell
@@ -83,9 +83,9 @@ $ st2 run tutorial.nasa_apod date=2018-07-04
 .
 id: 5b5da49c587be00e2675d5f5
 status: succeeded
-parameters: 
+parameters:
   date: '2018-07-04'
-result: 
+result:
   failed: false
   return_code: 0
   stderr: ''
@@ -101,4 +101,3 @@ st2 --debug run tutorial.nasa_apod date=2018-07-04
 
 Notice all of the `cURL` outputs, this makes it very easy to learn the API and
 reproduce what the CLI is doing.
-
