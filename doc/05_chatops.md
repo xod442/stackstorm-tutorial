@@ -5,8 +5,8 @@ new ChatOps command, called an `action alias`, that will execute our action
 `tutorial.nasa_apod_rabbitmq_publish`.
 
 
-## Try This
-[![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://www.wookieware.com/qview.mp4)
+## A brief Stackstorm Introduction
+[![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://www.rickkauffman/partnerz/stack-intro.mp4.mp4)
 
 ## Create Slack bot
 
