@@ -34,7 +34,7 @@ Next, we want to install this tutorial on the system so we can use the content
 in further sections. Packs are simply git repos and can be installed like so:
 
 ```shell
-st2 pack install https://github.com/encoretechnologies/stackstorm-tutorial.git
+st2 pack install https://github.com/xod442/stackstorm-tutorial.git
 ```
 
 Our code should now be present in: `/opt/stackstorm/packs/tutorial/`
@@ -47,5 +47,5 @@ You can copy the answers from the answer folder up the the corresponding folder 
 
 The answers are located in:`/opt/stackstorm/packs/tutorial/etc/answers`
 
-packs are also available on the stackstorm exchange and can be installed with :
+Packs are also available on the stackstorm exchange and can be installed with :
 `st2 pack install servicenow`
