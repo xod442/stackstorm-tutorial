@@ -11,7 +11,7 @@ extension points that StackStorm provides. In a pack you can distribute the foll
 * Python `requirements.txt` files
 * Additional content (think Jinja templates, Ansible playbooks, etc)
 
-Packs are just `git` repos! You can either install them with the URL to the `git` repo 
+Packs are just `git` repos! You can either install them with the URL to the `git` repo
 or by name from the public [StackStorm exchange](https://exchange.stackstorm.org)
 
 In this demo we're going to install the `rabbitmq` pack and configure it so
@@ -25,6 +25,11 @@ First, install the `rabbitmq` pack from the public
 ``` shell
 st2 pack install rabbitmq
 ```
+
+## Prior to running RabbitMQ
+Going to need to jumpstart the rabbitMQ pluggins like this:
+`rabbitmq-pluggins enable rabbitmq_management`
+
 
 ## Configure RabbitMQ queue
 

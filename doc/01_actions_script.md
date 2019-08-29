@@ -66,11 +66,12 @@ answers directory:
 ```shell
 cp /opt/stackstorm/packs/tutorial/etc/answers/actions/nasa_apod_script.yaml /opt/stackstorm/packs/tutorial/actions/nasa_apod.yaml
 ```
+
+-----------
+
 You can copy files all around U buntu with the 'caja' application. Caja is a windows like file manager.
 
 At the `#` prompt in a terminal windows type 'caja'....close caja to return to the terminal prompt......
-
------------
 
 Notice the `runner_type: local-shell-script`. This tells StackStorm we're executing
 a local script. The `entry_point` parameter is the path (relative to the `actions/` directory)
@@ -110,3 +111,5 @@ st2 --debug run tutorial.nasa_apod date=2018-07-04
 
 Notice all of the `cURL` outputs, this makes it very easy to learn the API and
 reproduce what the CLI is doing.
+
+Congratulations!!!!! Your first stackstorm action!

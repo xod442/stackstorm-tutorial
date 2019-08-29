@@ -4,6 +4,10 @@ The ChatOps demo will connect a chat bot to Slack. Then we will configure a
 new ChatOps command, called an `action alias`, that will execute our action
 `tutorial.nasa_apod_rabbitmq_publish`.
 
+
+## Try This
+[![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://www.wookieware.com/qview.mp4)
+
 ## Create Slack bot
 
 Our first task will be to connect StackStorm ChatOps to our Slack workspace.
@@ -27,7 +31,7 @@ In the username field, pick a username for your bot then press "Add Integration"
 
 ![chatops_04_slack_bots_add_bot](/img/chatops_04_slack_bots_add_bot.png)
 
-Copy down the `API Token` field (1) , we will need this for StackStorm. You can also 
+Copy down the `API Token` field (1) , we will need this for StackStorm. You can also
 edit the `Full Name` (2) field of the bot, this will be the name displayed. To finish
 up, press the `Save Integration` button (3).
 
@@ -152,18 +156,18 @@ in a channel, or by running the `/invite` command in a channel.
 ## Creating an Action Alias
 
 When you type `!help` in a channel with a ChatOps bot, or `help` (no `!`) in a
-Direct Message, the bot will respond with a list of commands, known as 
+Direct Message, the bot will respond with a list of commands, known as
 `action aliases`. In short an `action alias` is a way to map a chat message into
 a StackStorm action invocation. The message may contain input parameters
 that will be forwarded on to the action when it is executed.
 
 Action aliases live in a pack's `aliases/` directory, so for our `tutorial`
-pack this would be `/opt/stackstorm/packs/tutorial/aliases`. 
+pack this would be `/opt/stackstorm/packs/tutorial/aliases`.
 
 Let's create a new action alias that allows us to invoke our `tutorial.nasa_apod_rabbitmq_publish`
-action from ChatOps. 
+action from ChatOps.
 
-To do this we will create a new metadata file 
+To do this we will create a new metadata file
 `/opt/stackstorm/packs/tutorial/aliases/nasa_apod_rabbitmq_publish.yaml` with the
 following content:
 
@@ -182,7 +186,7 @@ result:
 ```
 
 -----------
-**NOTE** 
+**NOTE**
 If you're struggling and just need the answer, simply copy the file from our
 answers directory:
 ```shell
