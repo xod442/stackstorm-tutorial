@@ -7,6 +7,10 @@ picture.
 
 ## Test existing script
 
+**NOTE** A couple housekeep thing we need to take care of to make our Ubuntu a little mode DevOps friendly
+Run this from the terminal: `sudo apt-get install python-pip`
+And then `pip install requests`
+
 Let's ensure this script works by running it:
 
 ```shell
@@ -15,6 +19,7 @@ Let's ensure this script works by running it:
 ```
 
 It worked, outputting the URL of the NASA Astronomy Picture Of the Day for July 4th 2018.
+You can copy and paste the URl into your web browser and view the picture if you'd like.
 
 ## Convert our script
 
@@ -61,6 +66,10 @@ answers directory:
 ```shell
 cp /opt/stackstorm/packs/tutorial/etc/answers/actions/nasa_apod_script.yaml /opt/stackstorm/packs/tutorial/actions/nasa_apod.yaml
 ```
+You can copy files all around U buntu with the 'caja' application. Caja is a windows like file manager.
+
+At the `#` prompt in a terminal windows type 'caja'....close caja to return to the terminal prompt......
+
 -----------
 
 Notice the `runner_type: local-shell-script`. This tells StackStorm we're executing
