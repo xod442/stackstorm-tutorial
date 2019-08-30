@@ -6,7 +6,7 @@ new ChatOps command, called an `action alias`, that will execute our action
 
 
 ## A brief Stackstorm Introduction
-[![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://www.rickkauffman.com/partnerz/stack-intro.mp4)
+[![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://www.wookieware.com/stack-intro.mp4)
 
 ## Create Slack bot
 
