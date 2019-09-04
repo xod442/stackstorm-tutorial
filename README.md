@@ -14,6 +14,6 @@ Please visit the following and complete the [prep instructions](https://gist.git
 1. [Script Actions](doc/01_actions_script.md)
 2. [Native Python Actions](doc/02_actions_native.md)
 3. [Packs](doc/03_packs.md)
-4. [Workflows](doc/04_workflows.md)
-5. [ChatOps](doc/05_chatops.md)
+4. [Context](doc/04_context.md)
+5. [Workflows](doc/05_workflows.md)
 6. [Event Driven Automation](doc/06_event_driven.md)
