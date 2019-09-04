@@ -1,6 +1,6 @@
 # Workflows
 
-Workflows allow us to chain actions together, implement conditional logic and branching, and 
+Workflows allow us to chain actions together, implement conditional logic and branching, and
 turn actions into composable automations.
 
 Workflows are actions too! They simply use a different `runner_type: mistral-v2`.
@@ -51,7 +51,7 @@ parameters:
 ```
 
 -----------
-**NOTE** 
+**NOTE**
 If you're struggling and just need the answer, simply copy the file from our
 answers directory:
 ```shell
@@ -67,8 +67,8 @@ st2ctl reload --register-actions
 
 ### Create the workflow
 
-StackStorm has several different Workflow engines including 
-[ActionChain](https://docs.stackstorm.com/actionchain.html), 
+StackStorm has several different Workflow engines including
+[ActionChain](https://docs.stackstorm.com/actionchain.html),
 [Mistral](https://docs.stackstorm.com/mistral.html),
 and the upcoming [Orchestra](https://github.com/StackStorm/orchestra).
 We're going to be using Mistral for this example.
@@ -84,40 +84,41 @@ Edit `/opt/stackstorm/packs/tutorial/actions/workflows/nasa_apod_rabbitmq_publis
 Content:
 
 ``` yaml
-version: '2.0'
+version: '1.0'
 
-tutorial.nasa_apod_rabbitmq_publish:
-  type: direct
-  input:
-    - date
-    - message
-    - host
-    - exchange
-    - exchange_type
-    - routing_key
+description: A workflow that gets the apod and posts to rabbitmq.
 
-  tasks:
-    get_apod_url:
-      action: tutorial.nasa_apod
-      input:
-        date: "{{ _.date }}"
-      publish:
-        apod_url: "{{ task('get_apod_url').result.result.url }}"
-      on-success:
-        - publish_to_rabbitmq
+input:
+  - date
+  - message
+  - host
+  - exchange
+  - exchange_type
+  - routing_key
 
-    publish_to_rabbitmq:
-      action: rabbitmq.publish_message
-      input:
-        host: "{{ _.host }}"
-        exchange: "{{ _.exchange }}"
-        exchange_type: "{{ _.exchange_type }}"
-        routing_key: "{{ _.routing_key }}"
-        message: "{{ _.apod_url }}{%if _.message %} {{ _.message }}{% endif %}"
+tasks:
+  get_apod_url:
+    action: tutorial.nasa_apod
+    input:
+      date: "<% ctx().date %>"
+    next:
+      - when: <% succeeded() %>
+        publish:
+          - apod_url: <% result().result %>
+        do: publish_to_rabbitmq
+
+  publish_to_rabbitmq:
+    action: rabbitmq.publish_message
+    input:
+      host: "<% ctx().host %>"
+      exchange: "<% ctx().exchange %>"
+      exchange_type: "<% ctx().exchange_type %>"
+      routing_key: "<% ctx().routing_key %>"
+      message: "<% ctx().apod_url.url %>"
 ```
 
 -----------
-**NOTE** 
+**NOTE**
 If you're struggling and just need the answer, simply copy the file from our
 answers directory:
 ```shell

@@ -3,7 +3,7 @@
 name: nasa_apod_rabbitmq_publish
 pack: tutorial
 description: "Queries NASA's APOD (Astronomy Picture Of the Day) API to get the link to the picture of the day, then publishes that link to a RabbitMQ queue"
-runner_type: "mistral-v2"
+runner_type: "orquesta"
 enabled: true
 entry_point: workflows/nasa_apod_rabbitmq_publish.yaml
 parameters:
