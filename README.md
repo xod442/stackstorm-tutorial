@@ -6,7 +6,10 @@ the excellent [StackStorm documentation](https://docs.stackstorm.com/) page.
 
 ## Prep Instructions
 
-Please visit the following and complete the [prep instructions](https://gist.github.com/nmaludy/21c403d98eaf13f2accfd85e68dadb9c)
+You will need a workstation:
+
+You can follow these steps outlined [This Guide](https://www.wookieware.com/st2.PPTX). Clicking this link
+will download the guide.
 
 ## Tutorial
 
