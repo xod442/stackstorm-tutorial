@@ -23,7 +23,7 @@ the following content:
 name: nasa_apod_rabbitmq_publish
 pack: tutorial
 description: "Queries NASA's APOD (Astronomy Picture Of the Day) API to get the link to the picture of the day, then publishes that link to a RabbitMQ queue"
-runner_type: "mistral-v2"
+runner_type: "orquesta"
 enabled: true
 entry_point: workflows/nasa_apod_rabbitmq_publish.yaml
 parameters:
@@ -139,3 +139,22 @@ Read from the queue to see if our message was delivered:
 ```shell
 rabbitmqadmin get queue=demoqueue count=99
 ```
+**NOTE**
+There is a lot going on in this work flow. Lets break it down for a little better understanding.
+
+1. The first thing we have to do is import the variables we will need for this work flow.
+These are passed from the corresponding YAML file that's in the actions directory.
+
+![Workflow - Import variables](/img/import-vars.png)
+
+2. Next step in to run a st2 action to get the picture of the day from nasa.
+
+![Workflow - Get picture from website](/img/get-pic.png)
+
+3. Now we have to assign the data we get back from nasa to a variable.
+
+![Workflow - Assign the picture URL](/img/assign-vars.png)
+
+4. We finish up the workflow by publishing the picture URL to the rabbitmq bus.
+
+![Workflow - Publish to the bus](/img/import-vars.png)

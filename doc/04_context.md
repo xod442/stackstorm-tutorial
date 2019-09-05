@@ -26,4 +26,4 @@ Key-Value pairs can also have a TTL associated with them, for automatic expiry.
 
 # Referencing Key-Value Pairs in Action Definitions
 
-Key-value pairs are referenced via specific string substitution syntax in rules. In general, the variable for substitution is enclosed with double brackets (i.e. {{var1}}). To refer to a key-value pair, prefix the name with “st2kv.system”, e.g. ``{{st2kv.system.os_keystone_endpoint}}`.
+Key-value pairs are referenced via specific string substitution syntax in rules. In general, the variable for substitution is enclosed with double brackets (i.e. {{var1}}). To refer to a key-value pair, prefix the name with “st2kv.system”, e.g. `{{st2kv.system.os_keystone_endpoint}}`.
