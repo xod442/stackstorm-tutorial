@@ -15,15 +15,16 @@ From the sensor and action plugins, since they are implemented in Python, the ke
 
 Key-Value pairs can also have a TTL associated with them, for automatic expiry.
 
-
-# Update an existing key-value pair:
+## Update an existing key-value pair:
 
 `st2 key set os_keystone_endpoint http://localhost:5000/v3`
 
-# Delete an existing key-value pair:
+## Delete an existing key-value pair:
 
 `st2 key delete os_keystone_endpoint`
 
-# Referencing Key-Value Pairs in Action Definitions
+## Referencing Key-Value Pairs in Action Definitions
+
+`st2 key set ipaddress "10.10.10.10` will save a key:value pair to the datastore. To retrieve it at any time, simply reference it by `"{{ st2kv.system.ipaddress }}"` this must be in DOUBLE quotes!!!!
 
 Key-value pairs are referenced via specific string substitution syntax in rules. In general, the variable for substitution is enclosed with double brackets (i.e. {{var1}}). To refer to a key-value pair, prefix the name with “st2kv.system”, e.g. `{{st2kv.system.os_keystone_endpoint}}`.
