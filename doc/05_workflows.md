@@ -3,7 +3,7 @@
 Workflows allow us to chain actions together, implement conditional logic and branching, and
 turn actions into composable automations.
 
-Workflows are actions too! They simply use a different `runner_type: mistral-v2`.
+Workflows are actions too! They simply use a different `runner_type: orquesta`.
 
 We'll demonstrate workflows by creating one that retrieves the NASA APOD picture URL
 then publish this URL to a RabbitMQ Queue.
@@ -11,7 +11,7 @@ then publish this URL to a RabbitMQ Queue.
 ### Create workflow action metadata
 
 The workflow action's metadata file is just like any other action metadata file. It
-has `runner_type: mistral-v2`, input parameters just like the a Python action,
+has `runner_type: orquesta`, input parameters just like the a Python action,
 and `entry_point` set to the path of workflow definition YAML file (relative to
 the pack's `actions/` directory)
 
@@ -74,7 +74,7 @@ and the upcoming [Orchestra](https://github.com/StackStorm/orchestra).
 We're going to be using Mistral for this example.
 
 In our workflow we want to call `tutorial.nasa_apod` to retrieve our image URL.
-Next we'll publish this as a message to RabbitMQ using the `twitter.update_status` action.
+Next we'll publish this as a message to RabbitMQ using the `rabbitmq.publiish_message` action.
 
 **Note** The name of the workflow within the workflow file, **MUST** be the same
 as the name of the StackStorm `pack.action`:
@@ -153,8 +153,8 @@ These are passed from the corresponding YAML file that's in the actions director
 
 3. Now we have to assign the data we get back from nasa to a variable.
 
-![Workflow - Assign the picture URL](/img/assign-vars.png)
+![Workflow - Assign the picture URL](/img/assign-url.png)
 
 4. We finish up the workflow by publishing the picture URL to the rabbitmq bus.
 
-![Workflow - Publish to the bus](/img/import-vars.png)
+![Workflow - Publish to the bus](/img/publish.png)
