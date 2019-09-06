@@ -4,7 +4,6 @@ description: A workflow that gets the apod and posts to rabbitmq.
 
 input:
   - date
-  - message
   - host
   - exchange
   - exchange_type

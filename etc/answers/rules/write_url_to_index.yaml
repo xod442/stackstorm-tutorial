@@ -1,0 +1,13 @@
+---
+name: "write_url_to_index"
+description: "Write the APOD URL to the etc/index.html file."
+enabled: true
+
+trigger:
+  type: "rabbitmq.new_message"
+  parameters: {}
+
+action:
+  ref: "tutorial.write_html"
+  parameters:
+    link: "{{ trigger.link }}"

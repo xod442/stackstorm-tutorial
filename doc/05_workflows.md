@@ -30,9 +30,6 @@ parameters:
   date:
     type: string
     description: "The date [YYYY-MM-DD] of the APOD image to retrieve."
-  message:
-    type: string
-    description: "Extra message to publish with the URL"
   host:
     type: string
     default: "127.0.0.1"
@@ -90,7 +87,6 @@ description: A workflow that gets the apod and posts to rabbitmq.
 
 input:
   - date
-  - message
   - host
   - exchange
   - exchange_type

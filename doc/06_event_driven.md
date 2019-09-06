@@ -1,16 +1,15 @@
 # Event Driven Demo
 
 This demo will setup a pipeline that will listen for messages on specific RabbitMQ queues
-words and then post messages into one of two Slack channels depending on the body of
-the message.
+words and then write the specific URL as a `hyperlink` to an etc/index.html, a file inside this pack.
 In order to accomplish this we're going to use the following components:
 
 * Sensor - Will query the RabbitMQ API for message on a specific queue
 * Trigger - Events that are emitted from the Sensor when a new message is received on the queue
 * Rule - Will match the triggers from the Sensor and invoke an action
-* Action - Metadata describing the workflow to execute in order to post to Slack
-* Workflow - Series of steps (actions) to determine which channel to post into.
-             Then finally post the message into the Slack channel.
+* Action - Metadata describing the workflow to execute in order to write URL to file
+* Workflow - Series of steps (actions) to get the APOD from the NASA site, extract the URL and
+  .write that URL to etc/index.
 
 ## Configure the Sensor
 
@@ -68,7 +67,7 @@ sudo systemctl restart st2sensorcontainer
 Publish a new message to RabbitMQ
 
 ```shell
-st2 run tutorial.nasa_apod_rabbitmq_publish date="2018-07-04" message="hey sensor"
+st2 run tutorial.nasa_apod_rabbitmq_publish date="2018-07-04"
 ```
 
 Check StackStorm to ensure a new trigger instance was created.
@@ -100,7 +99,6 @@ $ st2 trigger-instance get 5b5dce8e587be00afa97912b
 | id              | 5b5dce8e587be00afa97912b    |
 | trigger         | rabbitmq.new_message        |
 | occurrence_time | 2018-07-29T14:26:22.482000Z |
-| payload         | {                           |
 |                 |     "queue": "demoqueue",   |
 |                 |     "body": "test sensor"   |
 |                 | }                           |
@@ -111,18 +109,19 @@ $ st2 trigger-instance get 5b5dce8e587be00afa97912b
 ## Configure the Rule
 
 The rule that we're going to write will match the `rabbitmq.new_message` trigger
-and invoke an action to post this message to Slack (**note**: the action doesn't exist
+and invoke an action to write the NASA APOD URL to the tutorial/etc/index.html file.
+which is part of the tutorial. (**note**: the action doesn't exist
 yet, but we'll be creating it in the upcoming steps).
 
-Rules live in a pack's `rules/` directory and are defined as YAML metadata files.
+Rules live in a pack's `rules` directory and are defined as YAML metadata files.
 
-Create a new rule file in `/opt/stackstorm/packs/tutorial/rules/post_rabbitmq_to_slack.yaml`:
+Create a new rule file in `/opt/stackstorm/packs/tutorial/rules/write_url_to_index.yaml`:
 with following content:
 
 ``` yaml
 ---
-name: "post_rabbitmq_to_slack"
-description: "Post RabbitMQ message to a Slack channel."
+name: "write_url_to_index"
+description: "Write the APOD URL to the etc/index.html file."
 enabled: true
 
 trigger:
@@ -130,10 +129,10 @@ trigger:
   parameters: {}
 
 action:
-  ref: "tutorial.post_rabbitmq_to_slack"
+  ref: "tutorial.write_url_to_index"
   parameters:
-    queue: "{{ trigger.queue }}"
-    body: "{{ trigger.body }}"
+    link: "{{ trigger.link }}"
+
 ```
 
 -----------
@@ -141,7 +140,7 @@ action:
 If you're struggling and just need the answer, simply copy the file from our
 answers directory:
 ```shell
-cp /opt/stackstorm/packs/tutorial/etc/answers/rules/post_rabbitmq_to_slack.yaml /opt/stackstorm/packs/tutorial/rules/post_rabbitmq_to_slack.yaml
+cp /opt/stackstorm/packs/tutorial/etc/answers/rules/write_url_to_index.yaml /opt/stackstorm/packs/tutorial/rules/write_url_to_index.yaml
 ```
 -----------
 
@@ -153,10 +152,10 @@ st2ctl reload --register-rules
 
 ### Test the rule
 
-Publish a RabbitMQ message with either `#pyohio` or `#stackstorm` in the body
+Run the st2 action to send the URL to rabbitmq
 
 ```shell
-st2 run tutorial.nasa_apod_rabbitmq_publish date="2018-07-04" message="sensor to #pyohio"
+st2 run tutorial.nasa_apod_rabbitmq_publish date="2018-07-04"
 ```
 
 Check StackStorm to ensure that a trigger was created:
@@ -184,12 +183,12 @@ $ st2 trigger-instance list --trigger rabbitmq.new_message
 Check StackStorm to ensure that our rule matched our trigger (by type):
 
 ``` shell
-$ st2 rule-enforcement list --rule tutorial.post_rabbitmq_to_slack
+$ st2 rule-enforcement list --rule tutorial.write_url_to_index
 +--------------------------+-------------------------------+--------------------------+--------------+-----------------------------+
 | id                       | rule.ref                      | trigger_instance_id      | execution_id | enforced_at                 |
 +--------------------------+-------------------------------+--------------------------+--------------+-----------------------------+
-| 5b5dd083587be00afa97913c | tutorial.post_rabbitmq_to_sla | 5b5dd083587be00afa97913a |              | 2018-07-29T14:34:43.161928Z |
-|                          | ck                            |                          |              |                             |
+| 5b5dd083587be00afa97913c | tutorial.write_url_to_file | 5b5dd083587be00afa97913a |              | 2018-07-29T14:34:43.161928Z |
+|                          |                          |                          |              |                             |
 +--------------------------+-------------------------------+--------------------------+--------------+-----------------------------+
 ```
 
@@ -201,44 +200,38 @@ $ st2 rule-enforcement get 5b5dd083587be00afa97913c
 | Property            | Value                                                  |
 +---------------------+--------------------------------------------------------+
 | id                  | 5b5dd083587be00afa97913c                               |
-| rule.ref            | tutorial.post_rabbitmq_to_slack                        |
+| rule.ref            | tutorial.write_url_to_index                            |
 | trigger_instance_id | 5b5dd083587be00afa97913a                               |
 | execution_id        |                                                        |
-| failure_reason      | Action "tutorial.post_rabbitmq_to_slack" doesn't exist |
+| failure_reason      | Action "tutorial.write_url_to_index" doesnt exist      |
 | enforced_at         | 2018-07-29T14:34:43.161928Z                            |
 +---------------------+--------------------------------------------------------+
 ```
 
-This failed as expected since we haven't created the action yet (our next step).
+This failed as expected since we havent created the action yet (our next step).
 
 
 ## Create the Action and Workflow
 
-Our action will be a workflow that receives a RabbitMQ message.
-The workflow will examine the body of the message and determine what channel
-to post the message in depending on the hashtags used. If `#pyohio` then
-the message will be posted in the `#pyohio` Slack channel, if `#stackstorm`
-then the message will be posted in the `#stackstorm` channel.
+Our action will be a atandard action that will leverage a python script to write
+the formatted URL to the etc/index.html file.
 
 First we will create our action metadata file
-`/opt/stackstorm/packs/tutorial/actions/post_rabbitmq_to_slack.yaml` with the
+`/opt/stackstorm/packs/tutorial/actions/write_html.yaml` with the
 following conent:
 
 ``` yaml
 ---
-name: post_rabbitm_to_slack
+name: write_html
 pack: tutorial
-description: "Post a RabbitMQ message to Slack"
-runner_type: "mistral-v2"
+description: "Writes the NASA APOD URL link to a index.html as a hyperlink"
+runner_type: "python-script"
 enabled: true
-entry_point: workflows/post_rabbitmq_to_slack.yaml
+entry_point: write_html.py
 parameters:
-  queue:
+  link:
     type: string
-    description: "Queue the message was received on"
-  body:
-    type: string
-    description: "Body of the message"
+    description: "The URL for the NASA Astronomical Picture of the Day."
 ```
 
 -----------
@@ -246,43 +239,43 @@ parameters:
 If you're struggling and just need the answer, simply copy the file from our
 answers directory:
 ```shell
-cp /opt/stackstorm/packs/tutorial/etc/answers/actions/post_rabbitmq_to_slack.yaml /opt/stackstorm/packs/tutorial/actions/post_rabbitmq_to_slack.yaml
+cp /opt/stackstorm/packs/tutorial/etc/answers/actions/write_html.yaml /opt/stackstorm/packs/tutorial/actions/write_html.yaml
 ```
 -----------
 
-Next we will create our workflow file
-`/opt/stackstorm/packs/tutorial/actions/workflows/post_rabbitmq_to_slack.yaml`
+Next we will create our python script
+`/opt/stackstorm/packs/tutorial/actions/workflows/write_html.py`
 with the following content:
 
-``` yaml
-version: '2.0'
+``` python
+#!/usr/bin/env python
+#
+# Description:
+#   a stackstorm action that takes a link string and formats as a hypelink and
+#   writes to the /etc/index.html.
+# Author:
+#   Rick Kauffman wookieware.com
+import os
+import json
+import requests
+from st2common.runners.base_action import Action
 
-tutorial.post_rabbitmq_to_slack:
-  type: direct
-  input:
-    - queue
-    - body
-    
-  tasks:
-    channel_branch:
-      action: std.noop
-      publish:
-        chat_message: "Received a message on RabbitMQ queue {{ _.queue }}\n {{ _.body }}"
-      on-complete:
-        - post_to_pyohio: "{{ '#pyohio' in _.body }}"
-        - post_to_stackstorm: "{{ '#stackstorm' in _.body }}"
-        
-    post_to_pyohio:
-      action: chatops.post_message
-      input:
-        message: "{{ _.chat_message }}"
-        channel: "#pyohio"
-        
-    post_to_stackstorm:
-      action: chatops.post_message
-      input:
-        message: "{{ _.chat_message }}"
-        channel: "#stackstorm"
+
+class WriteHtml(Action):
+
+    def run(self,link):
+        if link is not None:
+            # write to a index file
+            file1=open("/opt/stackstorm/packs/tutorial/etc/index.html","a")
+            line = "<p><a href="+link+">"+link+"</a></p>\n"
+
+            file1.write(line)
+            file1.close()
+
+        else:
+            error = 'Failed to write link to index file'
+            return error
+        return link
 ```
 
 -----------
@@ -290,7 +283,7 @@ tutorial.post_rabbitmq_to_slack:
 If you're struggling and just need the answer, simply copy the file from our
 answers directory:
 ```shell
-cp /opt/stackstorm/packs/tutorial/etc/answers/actions/workflows/post_rabbitmq_to_slack.yaml /opt/stackstorm/packs/tutorial/actions/workflows/post_rabbitmq_to_slack.yaml
+cp /opt/stackstorm/packs/tutorial/etc/answers/actions/workflows/write_url_to_index.yaml /opt/stackstorm/packs/tutorial/actions/workflows/write_url_to_index.yaml
 ```
 -----------
 
@@ -321,7 +314,7 @@ st2 run tutorial.nasa_apod_rabbitmq_publish date="2018-07-04" message="sensor to
 Check to ensure our action executed:
 
 ``` shell
-$ st2 rule-enforcement list --rule tutorial.post_rabbitmq_to_slack
+$ st2 rule-enforcement list --rule tutorial.write_url_to_index
 +--------------------------+--------------------+---------------------+--------------+--------------------+
 | id                       | rule.ref           | trigger_instance_id | execution_id | enforced_at        |
 +--------------------------+--------------------+---------------------+--------------+--------------------+
@@ -338,7 +331,7 @@ $ st2 rule-enforcement get 5b5dd288587be00afa97914c
 | Property            | Value                           |
 +---------------------+---------------------------------+
 | id                  | 5b5dd288587be00afa97914c        |
-| rule.ref            | tutorial.post_rabbitmq_to_slack |
+| rule.ref            | tutorial.write_url_to_index |
 | trigger_instance_id | 5b5dd287587be00afa979147        |
 | execution_id        | 5b5dd288587be00afa97914a        |
 | failure_reason      |                                 |
@@ -352,13 +345,13 @@ Check the action execution by ID contained in the rule enforcement:
 ``` shell
 $ st2 execution get 5b5dd288587be00afa97914a
 id: 5b5dd288587be00afa97914a
-action.ref: tutorial.post_rabbitmq_to_slack
-parameters: 
+action.ref: tutorial.write_url_to_index
+parameters:
   body: '#pyohio'
   queue: demoqueue
 status: succeeded (3s elapsed)
 result_task: post_to_pyohio
-result: 
+result:
   channel: '#pyohio'
   extra: null
   message: 'Received a message on RabbitMQ queue demoqueue
