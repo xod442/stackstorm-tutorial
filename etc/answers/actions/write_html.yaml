@@ -1,0 +1,11 @@
+---
+name: nasa_apod
+pack: tutorial
+description: "Queries NASA's APOD (Astronomy Picture Of the Day) API to get the link to the picture of the day."
+runner_type: "python-script"
+enabled: true
+entry_point: nasa_apod.py
+parameters:
+  link:
+    type: string
+    description: "The URL for the NASA Astronomical Picture of the Day."
