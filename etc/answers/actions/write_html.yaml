@@ -1,10 +1,10 @@
 ---
-name: nasa_apod
+name: write_html
 pack: tutorial
-description: "Queries NASA's APOD (Astronomy Picture Of the Day) API to get the link to the picture of the day."
+description: "Writes the NASA APOD URL link to a index.html as a hyperlink"
 runner_type: "python-script"
 enabled: true
-entry_point: nasa_apod.py
+entry_point: write_html.py
 parameters:
   link:
     type: string
