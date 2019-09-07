@@ -1,0 +1,18 @@
+version: '1.0'
+
+description: A workflow that kicks off the publishing.
+
+
+tasks:
+  get_date:
+    action: tutorial.make_date
+    next:
+      - when: <% succeeded() %>
+        publish:
+          - date: <% result().result %>
+        do: run_rabbitmq_publish
+
+  run_rabbitmq_publish:
+    action: tutorial.nasa_apod_rabbitmq_publish
+    input:
+      date: "<% ctx().date %>"

@@ -1,4 +1,4 @@
-# Event Driven Demo
+cd # Event Driven Demo
 
 This demo will setup a pipeline that will listen for messages on specific RabbitMQ queues
 words and then write the specific URL as a `hyperlink` to an etc/index.html, a file inside this pack.
@@ -283,7 +283,7 @@ class WriteHtml(Action):
 If you're struggling and just need the answer, simply copy the file from our
 answers directory:
 ```shell
-cp /opt/stackstorm/packs/tutorial/etc/answers/actions/workflows/write_url_to_index.yaml /opt/stackstorm/packs/tutorial/actions/workflows/write_url_to_index.yaml
+cp /opt/stackstorm/packs/tutorial/etc/answers/actions/workflows/write_html.py /opt/stackstorm/packs/tutorial/actions/workflows/write_html_py
 ```
 -----------
 
@@ -293,34 +293,25 @@ Next we'll tell StackStorm about our action, so that our rule can invoke it:
 st2ctl reload --register-actions
 ```
 
-### Invite your bot to #pyohio and #stackstorm
-
-In Slack, create two new channels and invite your bot!
-
-* `/open #pyohio`
-  * `/invite @StackStorm`
-* `/open #stackstorm`
-  * `/invite @StackStorm`
-
 
 ### Testing our Action and Workflow
 
-Post another message with either `#pyohio` or `#stackstorm` in the message
+Post another message
 
 ```shell
-st2 run tutorial.nasa_apod_rabbitmq_publish date="2018-07-04" message="sensor to #pyohio"
+st2 run tutorial.nasa_apod_rabbitmq_publish date="2018-07-04"
 ```
 
 Check to ensure our action executed:
 
 ``` shell
 $ st2 rule-enforcement list --rule tutorial.write_url_to_index
-+--------------------------+--------------------+---------------------+--------------+--------------------+
-| id                       | rule.ref           | trigger_instance_id | execution_id | enforced_at        |
-+--------------------------+--------------------+---------------------+--------------+--------------------+
-| 5b5dd288587be00afa97914c | tutorial.post_rabb | 5b5dd287587be00afa9 | 5b5dd288587be00afa | 2018-07-29T14:43:1 |
-|                          | itmq_to_slack      | 79147               | 97914a             | 9.870669Z          |
-+--------------------------+--------------------+---------------------+--------------+--------------------+
++--------------------------+--------------------+---------------------+-------------------+--------------------+
+| id                       | rule.ref           | trigger_instance_id | execution_id | enforced_at             |
++--------------------------+--------------------+---------------------+-------------------+--------------------+
+| 5b5dd288587be00afa97914c | tutorial.write_html| 5b5dd287587be00afa9 | 5b5dd288587be00afa | 2018-07-29T14:43:1 |
+|                          |                    | 79147               | 97914a             | 9.870669Z          |
++--------------------------+--------------------+---------------------+--------------------+--------------------+
 ```
 
 Check the rule-enforcement
@@ -340,7 +331,7 @@ $ st2 rule-enforcement get 5b5dd288587be00afa97914c
 
 ```
 
-Check the action execution by ID contained in the rule enforcement:
+Check the tutorial/etc/index.html:
 
 ``` shell
 $ st2 execution get 5b5dd288587be00afa97914a
