@@ -106,6 +106,9 @@ $ st2 trigger-instance get 5b5dce8e587be00afa97912b
 +-----------------+-----------------------------+
 ```
 
+There is an easier way to see what's going on in stackstorm. You can log into the web interface. Point a browers ay 127.0.0.1 of you stackstorm workstation and login with st2admin/`password you used when you installed stackstorm`
+![Watching - Getting feedback](/img/watching.png)
+
 ## Configure the Rule
 
 The rule that we're going to write will match the `rabbitmq.new_message` trigger
@@ -129,7 +132,7 @@ trigger:
   parameters: {}
 
 action:
-  ref: "tutorial.write_url_to_index"
+  ref: "tutorial.write_html"
   parameters:
     link: "{{ trigger.link }}"
 
@@ -302,7 +305,7 @@ Post another message
 st2 run tutorial.nasa_apod_rabbitmq_publish date="2018-07-04"
 ```
 
-Check to ensure our action executed:
+Check to ensure our action executed: **Note** remember you can use the GUI ....and the force!
 
 ``` shell
 $ st2 rule-enforcement list --rule tutorial.write_url_to_index
@@ -331,31 +334,9 @@ $ st2 rule-enforcement get 5b5dd288587be00afa97914c
 
 ```
 
-Check the tutorial/etc/index.html:
+Check the tutorial/etc/index.html: You should see at least one link to the HASA APOD picture.
 
-``` shell
-$ st2 execution get 5b5dd288587be00afa97914a
-id: 5b5dd288587be00afa97914a
-action.ref: tutorial.write_url_to_index
-parameters:
-  body: '#pyohio'
-  queue: demoqueue
-status: succeeded (3s elapsed)
-result_task: post_to_pyohio
-result:
-  channel: '#pyohio'
-  extra: null
-  message: 'Received a message on RabbitMQ queue demoqueue
- https://apod.nasa.gov/apod/image/1807/5D4_4276_crs15launch1024.jpg sensor to #pyohio'
-  user: null
-  whisper: false
-start_timestamp: Sun, 29 Jul 2018 14:43:19 UTC
-end_timestamp: Sun, 29 Jul 2018 14:43:22 UTC
-+--------------------------+------------------------+----------------+--------------------+-----------------+
-| id                       | status                 | task           | action             | start_timestamp |
-+--------------------------+------------------------+----------------+--------------------+-----------------+
-| 5b5dd288587be00e2675d6ac | succeeded (1s elapsed) | post_to_pyohio | chatops.post_messa | Sun, 29 Jul     |
-|                          |                        |                | ge                 | 2018 14:43:20   |
-|                          |                        |                |                    | UTC             |
-+--------------------------+------------------------+----------------+--------------------+-----------------+
-```
+# Some thoughts
+
+Naturally, just running a rule on a new message to the rabbitmq bus would not be the best. You can
+limit the requirement to be something like new message that contained something else.

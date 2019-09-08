@@ -27,9 +27,6 @@ runner_type: "orquesta"
 enabled: true
 entry_point: workflows/nasa_apod_rabbitmq_publish.yaml
 parameters:
-  date:
-    type: string
-    description: "The date [YYYY-MM-DD] of the APOD image to retrieve."
   host:
     type: string
     default: "127.0.0.1"
@@ -86,7 +83,6 @@ version: '1.0'
 description: A workflow that gets the apod and posts to rabbitmq.
 
 input:
-  - date
   - host
   - exchange
   - exchange_type
@@ -96,7 +92,7 @@ tasks:
   get_apod_url:
     action: tutorial.nasa_apod
     input:
-      date: "<% ctx().date %>"
+      date: <%now().format("%Y-%m-%d")%>
     next:
       - when: <% succeeded() %>
         publish:

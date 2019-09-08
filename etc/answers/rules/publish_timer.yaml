@@ -1,0 +1,13 @@
+---
+  name: "publish_timer"
+  pack: "tutorial"
+  description: "Rule using an Interval Timer to publish APOD."
+  trigger:
+    type: "core.st2.IntervalTimer"
+    parameters:
+      delta: 5
+      unit: "seconds"
+  criteria: {}
+  action:
+    ref: "tutorial.nasa_apod_rabbitmq_publish"
+  enabled: true

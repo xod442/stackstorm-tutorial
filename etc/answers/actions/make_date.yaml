@@ -1,7 +1,0 @@
----
-name: make_date
-pack: tutorial
-description: "returns the date in YYY-MM-DD format"
-runner_type: "python-script"
-enabled: true
-entry_point: make__date.py
