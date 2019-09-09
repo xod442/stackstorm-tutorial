@@ -1,4 +1,4 @@
-cd # Event Driven Demo
+# Event Driven Demo
 
 This demo will setup a pipeline that will listen for messages on specific RabbitMQ queues
 words and then write the specific URL as a `hyperlink` to an etc/index.html, a file inside this pack.

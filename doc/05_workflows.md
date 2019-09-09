@@ -139,11 +139,13 @@ These are passed from the corresponding YAML file that's in the actions director
 
 ![Workflow - Import variables](/img/import-vars.png)
 
-2. Next step in to run a st2 action to get the picture of the day from nasa.
+2. Next step in to run a st2 action to get the picture of the day from nasa. We need
+   to pass the date to our `tutorial.nasa_apod` action. We can use YAQL in
+   workflows.
 
 ![Workflow - Get picture from website](/img/get-pic.png)
 
-3. Now we have to assign the data we get back from nasa to a variable.
+3. Now we have to assign the data we get back from nasa to a variable. We use the publish task.
 
 ![Workflow - Assign the picture URL](/img/assign-url.png)
 
