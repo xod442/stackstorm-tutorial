@@ -3,16 +3,6 @@
 In this part of the tutorial we're going to login to our StackStorm box,
 authenticate with StackStorm and finally install this tutorial pack.
 
-# Objective
-![Objective - what success looks like](/img/objective.png)
-
-## Provisioning
-
-If you're doing this at home, you'll need to provision a StackStorm node.
-This can be done by getting acces to a clean installation of Ubuntu Mate: (https://ubuntu-mate.org/blog/ubuntu-mate-xenial-final-release/)
-
-To setup your workstation check out the guide here(http://www.wookieware.com/st2-workstation.pptx)
-
 # Using the workstation
 Open a terminal window and enter the following command to install a stackstorm server.
 
