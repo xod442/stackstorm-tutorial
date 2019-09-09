@@ -325,7 +325,7 @@ $ st2 rule-enforcement get 5b5dd288587be00afa97914c
 | Property            | Value                           |
 +---------------------+---------------------------------+
 | id                  | 5b5dd288587be00afa97914c        |
-| rule.ref            | tutorial.write_url_to_index |
+| rule.ref            | tutorial.write_url_to_index     |
 | trigger_instance_id | 5b5dd287587be00afa979147        |
 | execution_id        | 5b5dd288587be00afa97914a        |
 | failure_reason      |                                 |
@@ -335,8 +335,3 @@ $ st2 rule-enforcement get 5b5dd288587be00afa97914c
 ```
 
 Check the tutorial/etc/index.html: You should see at least one link to the HASA APOD picture.
-
-# Some thoughts
-
-Naturally, just running a rule on a new message to the rabbitmq bus would not be the best. You can
-limit the requirement to be something like new message that contained something else.
