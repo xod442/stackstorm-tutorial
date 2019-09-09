@@ -12,6 +12,10 @@ At the prompt update Ubuntu with `apt-get update`
 
 Make sure `curl` is up to date with `apt-get install curl`
 
+We will have to get PyPi (pip) installed `sudo apt-get install python-pip`
+
+Now use pip to install requests `pip install requests`
+
 Now install stackstorm with ` curl -sSL https://stackstorm.com/packages/install.sh | bash -s -- --user=st2admin --password='Ch@ngeMe'`
 
 **NOTE** Please change the password to something you will remember.

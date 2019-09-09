@@ -123,7 +123,7 @@ cp /opt/stackstorm/packs/tutorial/etc/answers/actions/workflows/nasa_apod_rabbit
 Run our action, creating a new message!
 
 ``` shell
-st2 run tutorial.nasa_apod_rabbitmq_publish date="2018-07-04"
+st2 run tutorial.nasa_apod_rabbitmq_publish
 ```
 
 Read from the queue to see if our message was delivered:

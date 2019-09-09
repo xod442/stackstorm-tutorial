@@ -18,6 +18,8 @@ This sensor uses information from the `rabbitmq` pack configuration located in:
 `/opt/stackstorm/configs/rabbitmq.yaml`. The config file contains a `queues` parameter
 that tells `rabbitmq.queues_sensor` what queues to listen for messages on.
 
+You can use the shortcut below or......carry on!
+
 Copy `/opt/stackstorm/packs/rabbitmq/rabbitmq.yaml.example` to `/opt/stackstorm/configs/rabbitmq.yaml`:
 
 ```yaml
@@ -67,7 +69,7 @@ sudo systemctl restart st2sensorcontainer
 Publish a new message to RabbitMQ
 
 ```shell
-st2 run tutorial.nasa_apod_rabbitmq_publish
+st2 run tutorial.nasa_apod_rabbitmq_publish date="2018-07-04" message="hey sensor"
 ```
 
 Check StackStorm to ensure a new trigger instance was created.
@@ -99,12 +101,14 @@ $ st2 trigger-instance get 5b5dce8e587be00afa97912b
 | id              | 5b5dce8e587be00afa97912b    |
 | trigger         | rabbitmq.new_message        |
 | occurrence_time | 2018-07-29T14:26:22.482000Z |
+| payload         | {                           |
 |                 |     "queue": "demoqueue",   |
 |                 |     "body": "test sensor"   |
 |                 | }                           |
 | status          | processed                   |
 +-----------------+-----------------------------+
 ```
+
 ## Some good news!!!!!!!!
 
 There is an easier way to see what's going on in stackstorm. You can log into the web interface. Point a browser at 127.0.0.1 of you stackstorm workstation and login with st2admin/`password you used when you installed stackstorm`
@@ -159,66 +163,6 @@ Next we'll load the rule into the database so that it begins matching messages.
 st2ctl reload --register-rules
 ```
 
-### Test the rule
-
-Run the st2 action to send the URL to rabbitmq
-
-```shell
-st2 run tutorial.nasa_apod_rabbitmq_publish
-```
-
-Check StackStorm to ensure that a trigger was created:
-
-``` shell
-$ st2 trigger-instance list --trigger rabbitmq.new_message
-+--------------------------+----------------+-----------------+-----------+
-| id                       | trigger        | occurrence_time | status    |
-+--------------------------+----------------+-----------------+-----------+
-| 5b5dce8e587be00afa97911f | rabbitmq.new_m | Sun, 29 Jul     | processed |
-|                          | essage         | 2018 14:26:22   |           |
-|                          |                | UTC             |           |
-| 5b5dce8e587be00afa979120 | rabbitmq.new_m | Sun, 29 Jul     | processed |
-|                          | essage         | 2018 14:26:22   |           |
-|                          |                | UTC             |           |
-| 5b5dce8e587be00afa97912b | rabbitmq.new_m | Sun, 29 Jul     | processed |
-|                          | essage         | 2018 14:26:22   |           |
-|                          |                | UTC             |           |
-| 5b5dd083587be00afa97913a | rabbitmq.new_m | Sun, 29 Jul     | processed |
-|                          | essage         | 2018 14:34:43   |           |
-|                          |                | UTC             |           |
-+--------------------------+----------------+-----------------+-----------+
-```
-
-Check StackStorm to ensure that our rule matched our trigger (by type):
-
-``` shell
-$ st2 rule-enforcement list --rule tutorial.write_url_to_index
-+--------------------------+-------------------------------+--------------------------+--------------+-----------------------------+
-| id                       | rule.ref                      | trigger_instance_id      | execution_id | enforced_at                 |
-+--------------------------+-------------------------------+--------------------------+--------------+-----------------------------+
-| 5b5dd083587be00afa97913c | tutorial.write_url_to_file | 5b5dd083587be00afa97913a |              | 2018-07-29T14:34:43.161928Z |
-|                          |                          |                          |              |                             |
-+--------------------------+-------------------------------+--------------------------+--------------+-----------------------------+
-```
-
-Get details about the rule enforcement:
-
-``` shell
-$ st2 rule-enforcement get 5b5dd083587be00afa97913c
-+---------------------+--------------------------------------------------------+
-| Property            | Value                                                  |
-+---------------------+--------------------------------------------------------+
-| id                  | 5b5dd083587be00afa97913c                               |
-| rule.ref            | tutorial.write_url_to_index                            |
-| trigger_instance_id | 5b5dd083587be00afa97913a                               |
-| execution_id        |                                                        |
-| failure_reason      | Action "tutorial.write_url_to_index" doesnt exist      |
-| enforced_at         | 2018-07-29T14:34:43.161928Z                            |
-+---------------------+--------------------------------------------------------+
-```
-
-This failed as expected since we havent created the action yet (our next step).
-
 
 ## Create the Action to write the tutorial/etc/index.html file
 
@@ -253,7 +197,7 @@ cp /opt/stackstorm/packs/tutorial/etc/answers/actions/write_html.yaml /opt/stack
 -----------
 
 Next we will create our python script
-`/opt/stackstorm/packs/tutorial/actions/workflows/write_html.py`
+`/opt/stackstorm/packs/tutorial/actions/write_html.py`
 with the following content:
 
 ``` python
@@ -292,7 +236,7 @@ class WriteHtml(Action):
 If you're struggling and just need the answer, simply copy the file from our
 answers directory:
 ```shell
-cp /opt/stackstorm/packs/tutorial/etc/answers/actions/workflows/write_html.py /opt/stackstorm/packs/tutorial/actions/workflows/write_html_py
+cp /opt/stackstorm/packs/tutorial/etc/answers/workflows/write_html.py /opt/stackstorm/packs/tutorial/actions/write_html_py
 ```
 -----------
 

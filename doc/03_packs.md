@@ -28,7 +28,7 @@ st2 pack install rabbitmq
 
 ## Prior to running RabbitMQ
 Going to need to jumpstart the rabbitMQ pluggins like this:
-`rabbitmq-pluggins enable rabbitmq_management`
+`rabbitmq-plugins enable rabbitmq_management`
 
 
 ## Configure RabbitMQ queue
