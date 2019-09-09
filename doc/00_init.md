@@ -53,6 +53,23 @@ Our code should now be present in: `/opt/stackstorm/packs/tutorial/`
 ls -l /opt/stackstorm/packs/tutorial/
 ```
 
-You can copy the answers from the answer folder up the the corresponding folder if needed.
+# Learning stackstorm is not easy!!
 
+You are going to need an editor. This training is hands on deep into the workings of stackstorm.
+You will have to edit files and examine them. To accomplish this you will need some sort of an editor.
+
+If you have been following along, you can open up a terminal window and install **ATOM**
+
+1. `sudo add-apt-repository ppa:webupd8team/atom`
+2. `sudo apt-get update`
+3. `sudo apt-get install atom`
+4. `cd /opt/stackstorm`
+5. `atom .`
+
+![Atom editor - now you can see what youre working on](/img/atom-answers.png)
+
+As we go through this training you have the option of typing out all of the rules, actions and workflows.
+If you want to take the short-cut, you can copy from the answer folder to the corresponding stackstorm folder.
+
+# Cheating.....it's OK!
 The answers are located in:`/opt/stackstorm/packs/tutorial/etc/answers`
