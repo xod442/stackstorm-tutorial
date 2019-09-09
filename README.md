@@ -8,7 +8,7 @@ the excellent [StackStorm documentation](https://docs.stackstorm.com/) page.
 
 You will need a workstation:
 
-You can follow these steps outlined [This Guide](https://www.wookieware.com/st2.PPTX). Clicking this link
+You can follow these steps outlined [This Guide](https://www.wookieware.com/st2-workstation.pptx). Clicking this link
 will download the guide.
 
 ## Tutorial
