@@ -67,7 +67,7 @@ sudo systemctl restart st2sensorcontainer
 Publish a new message to RabbitMQ
 
 ```shell
-st2 run tutorial.nasa_apod_rabbitmq_publish date="2018-07-04"
+st2 run tutorial.nasa_apod_rabbitmq_publish
 ```
 
 Check StackStorm to ensure a new trigger instance was created.
@@ -105,8 +105,14 @@ $ st2 trigger-instance get 5b5dce8e587be00afa97912b
 | status          | processed                   |
 +-----------------+-----------------------------+
 ```
+## Some good news!!!!!!!!
 
-There is an easier way to see what's going on in stackstorm. You can log into the web interface. Point a browers ay 127.0.0.1 of you stackstorm workstation and login with st2admin/`password you used when you installed stackstorm`
+There is an easier way to see what's going on in stackstorm. You can log into the web interface. Point a browser at 127.0.0.1 of you stackstorm workstation and login with st2admin/`password you used when you installed stackstorm`
+
+I know it late in the training to tell you about the GUI but I think you need to know both.
+It's difficut to develop actions and rules using the GUI but it's excellent for seeing the execution
+history.
+
 ![Watching - Getting feedback](/img/watching.png)
 
 ## Configure the Rule
@@ -216,7 +222,7 @@ This failed as expected since we havent created the action yet (our next step).
 
 ## Create the Action and Workflow
 
-Our action will be a atandard action that will leverage a python script to write
+Our action will be a standard action that will leverage a python script to write
 the formatted URL to the etc/index.html file.
 
 First we will create our action metadata file
