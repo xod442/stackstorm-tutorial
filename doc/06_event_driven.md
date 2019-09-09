@@ -164,7 +164,7 @@ st2ctl reload --register-rules
 Run the st2 action to send the URL to rabbitmq
 
 ```shell
-st2 run tutorial.nasa_apod_rabbitmq_publish date="2018-07-04"
+st2 run tutorial.nasa_apod_rabbitmq_publish
 ```
 
 Check StackStorm to ensure that a trigger was created:
@@ -308,7 +308,7 @@ st2ctl reload --register-actions
 Post another message
 
 ```shell
-st2 run tutorial.nasa_apod_rabbitmq_publish date="2018-07-04"
+st2 run tutorial.nasa_apod_rabbitmq_publish
 ```
 
 Check to ensure our action executed: **Note** remember you can use the GUI ....and the force!
