@@ -220,7 +220,7 @@ $ st2 rule-enforcement get 5b5dd083587be00afa97913c
 This failed as expected since we havent created the action yet (our next step).
 
 
-## Create the Action and Workflow
+## Create the Action to write the tutorial/etc/index.html file
 
 Our action will be a standard action that will leverage a python script to write
 the formatted URL to the etc/index.html file.
@@ -303,7 +303,7 @@ st2ctl reload --register-actions
 ```
 
 
-### Testing our Action and Workflow
+### Testing our Action
 
 Post another message
 
@@ -311,13 +311,13 @@ Post another message
 st2 run tutorial.nasa_apod_rabbitmq_publish
 ```
 
-Check to ensure our action executed: **Note** remember you can use the GUI ....and the force!
+Check to ensure our action executed: **Note** remember you can use the GUI ....and the **force**!
 
 ``` shell
 $ st2 rule-enforcement list --rule tutorial.write_url_to_index
-+--------------------------+--------------------+---------------------+-------------------+--------------------+
-| id                       | rule.ref           | trigger_instance_id | execution_id | enforced_at             |
-+--------------------------+--------------------+---------------------+-------------------+--------------------+
++--------------------------+--------------------+---------------------+-------------------+---------------------+
+| id                       | rule.ref           | trigger_instance_id | execution_id | enforced_at              |
++--------------------------+--------------------+---------------------+-------------------+---------------------+
 | 5b5dd288587be00afa97914c | tutorial.write_html| 5b5dd287587be00afa9 | 5b5dd288587be00afa | 2018-07-29T14:43:1 |
 |                          |                    | 79147               | 97914a             | 9.870669Z          |
 +--------------------------+--------------------+---------------------+--------------------+--------------------+
