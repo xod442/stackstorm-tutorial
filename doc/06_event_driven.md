@@ -109,8 +109,8 @@ $ st2 trigger-instance get 5b5dce8e587be00afa97912b
 
 There is an easier way to see what's going on in stackstorm. You can log into the web interface. Point a browser at 127.0.0.1 of you stackstorm workstation and login with st2admin/`password you used when you installed stackstorm`
 
-I know it late in the training to tell you about the GUI but I think you need to know both.
-It's difficut to develop actions and rules using the GUI but it's excellent for seeing the execution
+I know its late in the training to tell you about the GUI but I think you need to know both.
+It's difficult to develop actions and rules using the GUI but it's excellent for seeing the execution
 history.
 
 ![Watching - Getting feedback](/img/watching.png)
