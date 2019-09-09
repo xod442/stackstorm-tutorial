@@ -1,5 +1,8 @@
 # Context
 
+**NOTE:** Not really necessary to this training but just something to be aware of.
+If you want to keep moving you can bypass this section.
+
 At runtime, the workflow execution maintain a context dictionary that manages assigned variables. In the workflow definition, there are several location where variables can be assigned into the context. These locations are input, vars, and output in the workflow model and publish in the task transition model. The order of the variables being assigned into the context dictionary at runtime goes from workflow input and workflow vars at the start of workflow execution, to publish on each task completion, then finally output on workflow completion.
 
 Once a variable is assigned into the context dictionary, it can be referenced by a custom function named ctx. The `ctx` function takes the variable name as argument like `ctx(foobar)` or returns the entire dictionary if no argument is provided. This can be referenced by dot notation - e.g. `ctx().foobar`.

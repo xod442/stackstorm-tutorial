@@ -2,7 +2,7 @@
 
 We can do better than simple copy/paste.
 Since StackStorm is written in Python there is great support for creating actions
-using Python code. 
+using Python code.
 
 Some of the benefits of using Python actions in StackStorm:
 
@@ -19,7 +19,7 @@ StackStorm native python action that receives the benefits above.
 
 ## Convert the action metadata
 
-First, we need to create an Action Metadata with `runner_type: python-script`. 
+First, we need to create an Action Metadata with `runner_type: python-script`.
 This will tell StackStorm we're using a native Python action. It also defines our input
 parameters for the action (this will allow us to remove all of our `argparse` code within
 the script).
@@ -55,13 +55,13 @@ parameters:
     description: "The date [YYYY-MM-DD] of the APOD image to retrieve."
 ```
 
-You can see in this metadata file that our datatypes are defined along with 
+You can see in this metadata file that our datatypes are defined along with
 the same defaults and descriptions from the original python script. We're going
 to show you how these definitions make the `argparse` code in the python script
 no longer necessary!
 
 -----------
-**NOTE** 
+**NOTE**
 If you're struggling and just need the answer, simply copy the file from our
 answers directory:
 ```shell
@@ -90,8 +90,8 @@ class HelloWorld(Action):
         return "hello world"
 ```
 
-The final code in `/opt/stackstorm/packs/tutorial/actions/nasa_apod.py` 
-should look like: 
+The final code in `/opt/stackstorm/packs/tutorial/actions/nasa_apod.py`
+should look like:
 
 ``` python
 #!/usr/bin/env python
@@ -124,7 +124,7 @@ class Apod(Action):
 ```
 
 -----------
-**NOTE** 
+**NOTE**
 If you're struggling and just need the answer, simply copy the file from our
 answers directory:
 ```shell

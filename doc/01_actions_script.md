@@ -69,9 +69,6 @@ cp /opt/stackstorm/packs/tutorial/etc/answers/actions/nasa_apod_script.yaml /opt
 
 -----------
 
-You can copy files all around U buntu with the 'caja' application. Caja is a windows like file manager.
-
-At the `#` prompt in a terminal windows type 'caja'....close caja to return to the terminal prompt......
 
 Notice the `runner_type: local-shell-script`. This tells StackStorm we're executing
 a local script. The `entry_point` parameter is the path (relative to the `actions/` directory)
