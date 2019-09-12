@@ -52,7 +52,8 @@ sudo cp /opt/stackstorm/packs/tutorial/etc/answers/configs/rabbitmq.yaml /opt/st
 -----------
 
 Next we'll reload the pack's configuration so that the database contains
-the new values:
+the new values: **NOTE** Follow very closely, st2ctl only the configs at this point.
+If you simply st2ctl reload, you will wipe out the rabbitmq bus config from module 3.
 
 ``` shell
 st2ctl reload --register-configs
@@ -69,7 +70,7 @@ sudo systemctl restart st2sensorcontainer
 Publish a new message to RabbitMQ
 
 ```shell
-st2 run tutorial.nasa_apod_rabbitmq_publish date="2018-07-04" message="hey sensor"
+st2 run tutorial.nasa_apod_rabbitmq_publish
 ```
 
 Check StackStorm to ensure a new trigger instance was created.

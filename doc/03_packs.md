@@ -19,11 +19,11 @@ we can post a message to a Queue from StackStorm.
 
 ## Install RabbitMQ pack from exchange
 
-First, install the `rabbitmq` pack from the public
-[StackStorm exchange](https://exchange.stackstorm.org).
+First, install the `rabbitmq` pack from my github.
+[xod442 github](https://github.com/xod442/stackstorm-rabbitmq).
 
 ``` shell
-st2 pack install rabbitmq
+st2 pack install https://github.com/xod442/stackstorm-rabbitmq
 ```
 
 ## Prior to running RabbitMQ
