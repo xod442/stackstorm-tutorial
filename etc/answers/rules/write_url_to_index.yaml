@@ -10,4 +10,4 @@ trigger:
 action:
   ref: "tutorial.write_html"
   parameters:
-    link: "{{ trigger.link }}"
+    link: "{{ trigger.body }}"

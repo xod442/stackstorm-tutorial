@@ -92,23 +92,6 @@ $ st2 trigger-instance list --trigger rabbitmq.new_message
 +--------------------------+----------------+-----------------+-----------+
 ```
 
-You can view the information contained in the trigger like so:
-
-``` shell
-$ st2 trigger-instance get 5b5dce8e587be00afa97912b
-+-----------------+-----------------------------+
-| Property        | Value                       |
-+-----------------+-----------------------------+
-| id              | 5b5dce8e587be00afa97912b    |
-| trigger         | rabbitmq.new_message        |
-| occurrence_time | 2018-07-29T14:26:22.482000Z |
-| payload         | {                           |
-|                 |     "queue": "demoqueue",   |
-|                 |     "body": "test sensor"   |
-|                 | }                           |
-| status          | processed                   |
-+-----------------+-----------------------------+
-```
 
 ## Some good news!!!!!!!!
 
@@ -145,7 +128,7 @@ trigger:
 action:
   ref: "tutorial.write_html"
   parameters:
-    link: "{{ trigger.link }}"
+    link: "{{ trigger.body }}"
 
 ```
 
