@@ -7,10 +7,6 @@ picture.
 
 ## Test existing script
 
-**NOTE** A couple housekeep thing we need to take care of to make our Ubuntu a little mode DevOps friendly
-Run this from the terminal: `sudo apt-get install python-pip`
-And then `pip install requests`
-
 Let's ensure this script works by running it:
 
 ```shell

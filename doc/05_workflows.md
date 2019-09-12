@@ -96,7 +96,7 @@ tasks:
     next:
       - when: <% succeeded() %>
         publish:
-          - apod_url: <% result().result %>
+          - apod_url: <% result().stdout %>
         do: publish_to_rabbitmq
 
   publish_to_rabbitmq:
@@ -106,7 +106,7 @@ tasks:
       exchange: "<% ctx().exchange %>"
       exchange_type: "<% ctx().exchange_type %>"
       routing_key: "<% ctx().routing_key %>"
-      message: "<% ctx().apod_url.url %>"
+      message: "<% ctx().apod_url %>"
 ```
 
 -----------
