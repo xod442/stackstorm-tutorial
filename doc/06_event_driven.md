@@ -254,22 +254,93 @@ $ st2 rule-enforcement list --rule tutorial.write_url_to_index
 |                          |                    | 79147               | 97914a             | 9.870669Z          |
 +--------------------------+--------------------+---------------------+--------------------+--------------------+
 ```
+# The final solution
 
-Check the rule-enforcement
+Check the tutorial/etc/index.html: **HINT** you can use the file manager from the desktop to
+navigate to the index.html.
 
-``` shell
-$ st2 rule-enforcement get 5b5dd288587be00afa97914c
-+---------------------+---------------------------------+
-| Property            | Value                           |
-+---------------------+---------------------------------+
-| id                  | 5b5dd288587be00afa97914c        |
-| rule.ref            | tutorial.write_url_to_index     |
-| trigger_instance_id | 5b5dd287587be00afa979147        |
-| execution_id        | 5b5dd288587be00afa97914a        |
-| failure_reason      |                                 |
-| enforced_at         | 2018-07-29T14:43:19.870669Z     |
-+---------------------+---------------------------------+
+You should see at least one link to the NASA APOD picture.
+
+![Links...checking the output](/img/links.png)
+
+We we don't want to have to manually run our workflow every day to load the new link into our index.html. After all this is
+**EVENT** based automation!
+
+Let's add one more rule. This rule will simply leverage the core.IntervalTimer. This is a trigger that
+ships with stackstorm. You can set the timer for any increment. Lets start by having it fire
+every minute.
+
+Create a new rule file in `/opt/stackstorm/packs/tutorial/rules/publish_timer.yaml`:
+with following content:
+
+``` yaml
+---
+  name: "publish_timer"
+  pack: "tutorial"
+  description: "Rule using an Interval Timer to publish APOD."
+  trigger:
+    type: "core.st2.IntervalTimer"
+    parameters:
+      delta: 60
+      unit: "seconds"
+  criteria: {}
+  action:
+    ref: "tutorial.nasa_apod_rabbitmq_publish"
+  enabled: true
 
 ```
 
-Check the tutorial/etc/index.html: You should see at least one link to the HASA APOD picture.
+-----------
+**NOTE**
+If you're struggling and just need the answer, simply copy the file from our
+answers directory:
+```shell
+cp /opt/stackstorm/packs/tutorial/etc/answers/rules/publish_timer.yaml /opt/stackstorm/packs/tutorial/rules/publish_timer.yaml
+```
+-----------
+
+
+Next we'll load the rule into the database so that it begins matching messages.
+
+``` shell
+st2ctl reload --register-rules
+```
+
+Just reading over this rule it basically says, every 60 seconds run the nasa_apod_rabbitmq_publish workflow.
+This results in every minute a link is written to the index.html.
+
+Let this run for a couple of minutes and check the index.html for new links.
+
+Now of course you do not want to have the same link fill up this file but to have a link that
+represents a new picture each day. Change the interval timer to be every 24 hours!!!!
+
+``` yaml
+---
+  name: "publish_timer"
+  pack: "tutorial"
+  description: "Rule using an Interval Timer to publish APOD."
+  trigger:
+    type: "core.st2.IntervalTimer"
+    parameters:
+      delta: 24
+      unit: "hours"
+  criteria: {}
+  action:
+    ref: "tutorial.nasa_apod_rabbitmq_publish"
+  enabled: true
+
+```
+
+-----------
+
+Did you forget to reload the rules?
+
+
+``` shell
+st2ctl reload --register-rules
+```
+# Certificate
+
+Congratulations you made it!
+
+![Certificate...congratulations](/img/win.png)

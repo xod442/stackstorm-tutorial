@@ -5,7 +5,7 @@
   trigger:
     type: "core.st2.IntervalTimer"
     parameters:
-      delta: 15
+      delta: 60
       unit: "seconds"
   criteria: {}
   action:
