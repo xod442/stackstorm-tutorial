@@ -101,6 +101,10 @@ I know its late in the training to tell you about the GUI but I think you need t
 It's difficult to develop actions and rules using the GUI but it's excellent for seeing the execution
 history.
 
+If you click on the `triggers` at the top and scroll down the list on the left, you will see the rabbitmq trigger instance.
+On the right of the screen, if there have been any instances of the trigger they will appear here.
+You can click on the processed button and see the message.
+
 ![Watching - Getting feedback](/img/watching.png)
 
 ## Configure the Rule
