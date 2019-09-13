@@ -224,7 +224,7 @@ class WriteHtml(Action):
 If you're struggling and just need the answer, simply copy the file from our
 answers directory:
 ```shell
-cp /opt/stackstorm/packs/tutorial/etc/answers/write_html.py /opt/stackstorm/packs/tutorial/actions/write_html.py
+cp /opt/stackstorm/packs/tutorial/etc/answers/actions/write_html.py /opt/stackstorm/packs/tutorial/actions/write_html.py
 ```
 -----------
 
