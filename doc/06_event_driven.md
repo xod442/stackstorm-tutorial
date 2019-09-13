@@ -263,7 +263,7 @@ You should see at least one link to the NASA APOD picture.
 
 ![Links...checking the output](/img/links.png)
 
-We we don't want to have to manually run our workflow every day to load the new link into our index.html. After all this is
+We don't want to have to manually run our workflow every day to load the new link into our index.html. After all this is
 **EVENT** based automation!
 
 Let's add one more rule. This rule will simply leverage the core.IntervalTimer. This is a trigger that
@@ -309,7 +309,7 @@ st2ctl reload --register-rules
 Just reading over this rule it basically says, every 60 seconds run the nasa_apod_rabbitmq_publish workflow.
 This results in every minute a link is written to the index.html.
 
-Let this run for a couple of minutes and check the index.html for new links.
+Let's this run for a couple of minutes and check the index.html for new links.
 
 Now of course you do not want to have the same link fill up this file but to have a link that
 represents a new picture each day. Change the interval timer to be every 24 hours!!!!
