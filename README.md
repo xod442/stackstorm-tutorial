@@ -14,7 +14,7 @@ This can be done by getting access to a clean installation of Ubuntu Mate: (http
 
 You can install this in a VM and setup according to your location. Power on the workstation and login!
 
-To setup your workstation check out the guide here(http://www.wookieware.com/st2-workstation.pptx).
+To setup your workstation check out the my blog  here(http://www.wookieware.com/st2-workstation.pptx).
 Clicking this link will download the guide.
 
 ## Tutorial

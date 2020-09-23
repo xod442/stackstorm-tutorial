@@ -3,7 +3,7 @@
 In this part of the tutorial we're going to login to our StackStorm box,
 authenticate with StackStorm and finally install this tutorial pack.
 
-# Using the workstation
+# Using the workstation...installing stackstorm
 Open a terminal window and enter the following command to install a stackstorm server.
 
 In the terminal elevate privileges by using `sudo su -`
